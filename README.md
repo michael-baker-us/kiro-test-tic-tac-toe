@@ -1,14 +1,22 @@
 # Multi-Game Platform
 
-A browser-based gaming platform featuring multiple games with client-side navigation. Currently includes a fully-featured tic-tac-toe game with AI opponent support and comprehensive testing using property-based testing.
+A browser-based gaming platform featuring multiple games with simple tab-based navigation. Currently includes Snake and Tic-Tac-Toe games with comprehensive testing using property-based testing. Designed to work perfectly on GitHub Pages.
 
 ## Platform Features
 
-- **Landing Page**: Browse and select from available games
-- **Client-Side Routing**: Navigate between games without page reloads
-- **Modular Architecture**: Easy to add new games to the platform
-- **Browser History Support**: Back/forward buttons work as expected
-- **Direct URL Access**: Share links to specific games
+- **Tab-Based Navigation**: Switch between games instantly without page reloads
+- **Simple Single-Page Design**: No routing complexity, works reliably on GitHub Pages
+- **State Preservation**: Game state is maintained when switching between games
+- **Responsive Design**: Works on desktop and mobile devices
+
+## Snake Game Features
+
+- **Classic Gameplay**: Control the snake to eat food and grow longer
+- **Keyboard Controls**: Arrow keys or WASD to control direction
+- **Touch Controls**: Swipe gestures for mobile devices
+- **Score Tracking**: Keep track of your current score
+- **Collision Detection**: Game ends when snake hits walls or itself
+- **Smooth Animation**: Responsive game loop with consistent timing
 
 ## Tic-Tac-Toe Game Features
 
@@ -36,13 +44,13 @@ A browser-based gaming platform featuring multiple games with client-side naviga
 ## Getting Started
 
 1. Open `index.html` in a web browser
-2. You'll see the landing page with available games
-3. Click on a game tile to start playing
-4. Use the "Back to Games" button to return to the landing page
+2. You'll see tabs at the top for Snake and Tic-Tac-Toe
+3. Click on a tab to switch between games
+4. Your game progress is preserved when switching tabs
 
 ## How to Play Tic-Tac-Toe
 
-1. From the landing page, click on the "Tic-Tac-Toe" tile
+1. Click on the "Tic-Tac-Toe" tab at the top of the page
 2. Select your game mode:
    - **Player vs Player**: Take turns with another player
    - **Player vs AI**: Play against the computer (you're always X)
@@ -79,11 +87,14 @@ A browser-based gaming platform featuring multiple games with client-side naviga
 
 ```
 ├── src/
-│   ├── router.js              # Client-side routing system
-│   ├── landingPage.js         # Landing page component
-│   ├── gameRegistry.js        # Game registration and configuration
-│   ├── errorHandler.js        # Error handling utilities
 │   └── games/
+│       ├── snake/
+│       │   ├── index.js           # Game entry point
+│       │   ├── gameLogic.js       # Core game logic
+│       │   ├── gameLoop.js        # Game loop management
+│       │   ├── stateManager.js    # State management
+│       │   ├── inputHandler.js    # Keyboard/touch input
+│       │   └── uiController.js    # UI rendering
 │       └── tic-tac-toe/
 │           ├── index.js           # Game entry point
 │           ├── gameLogic.js       # Core game logic (pure functions)
@@ -93,11 +104,6 @@ A browser-based gaming platform featuring multiple games with client-side naviga
 │           ├── scoreboard.js      # Score tracking with localStorage
 │           └── uiController.js    # UI rendering and event handling
 ├── tests/
-│   ├── router.test.js
-│   ├── landingPage.test.js
-│   ├── gameRegistry.test.js
-│   ├── errorHandler.test.js
-│   ├── navigation.test.js
 │   ├── gameLogic.test.js
 │   ├── gameLogic.property.test.js
 │   ├── stateManager.test.js
@@ -106,85 +112,63 @@ A browser-based gaming platform featuring multiple games with client-side naviga
 │   ├── aiPlayer.test.js
 │   ├── scoreboard.test.js
 │   ├── battleMode.test.js
-│   ├── ticTacToeGame.test.js
-│   └── integration.test.js
-├── index.html                 # Application shell
-├── script.js                  # Main entry point
+│   ├── snakeGameLogic.test.js
+│   ├── snakeGameLogic.property.test.js
+│   ├── snakeStateManager.test.js
+│   ├── snakeStateManager.property.test.js
+│   ├── inputHandler.test.js
+│   ├── inputHandler.property.test.js
+│   ├── tabSwitching.property.test.js
+│   ├── integration.test.js
+│   └── ticTacToeGame.test.js
+├── index.html                 # Single-page application
+├── script.js                  # Main entry point with tab switching
 ├── styles.css                 # Global styles
 └── package.json
 ```
 
-## Adding New Games
+## GitHub Pages Deployment
 
-The platform is designed to make adding new games simple. Follow these steps:
+This application is designed to work perfectly on GitHub Pages with no additional configuration required.
 
-### 1. Create Your Game Directory
+### Deployment Steps
 
-Create a new directory under `src/games/` for your game:
+1. **Push your code to GitHub**:
+   ```bash
+   git add .
+   git commit -m "Deploy game platform"
+   git push origin main
+   ```
 
+2. **Enable GitHub Pages**:
+   - Go to your repository settings
+   - Navigate to "Pages" section
+   - Under "Source", select your branch (usually `main`)
+   - Click "Save"
+
+3. **Access your site**:
+   - Your site will be available at: `https://username.github.io/repository-name/`
+   - GitHub Pages will automatically serve `index.html`
+
+### Why It Works
+
+This platform is perfectly suited for GitHub Pages because:
+- **Single HTML file**: No routing means no 404 errors
+- **Relative paths**: All resources load correctly from any directory
+- **No server configuration**: No need for redirects or rewrites
+- **Static assets only**: Everything is a static file
+- **No build step required**: Deploy directly from your repository
+
+### Local Testing
+
+To test locally before deploying:
 ```bash
-mkdir -p src/games/your-game-name
+# Option 1: Open directly in browser
+open index.html
+
+# Option 2: Use a simple HTTP server
+npx http-server .
 ```
-
-### 2. Implement the Game Interface
-
-Your game must implement the standard game interface in `src/games/your-game-name/index.js`:
-
-```javascript
-export default class YourGame {
-  /**
-   * Initialize the game in the provided container
-   * @param {HTMLElement} container - The DOM element to render the game in
-   */
-  async init(container) {
-    // Set up your game UI and logic
-    // Render into the container element
-  }
-
-  /**
-   * Clean up resources when leaving the game
-   */
-  destroy() {
-    // Remove event listeners
-    // Clear timers/intervals
-    // Clean up any resources
-  }
-}
-```
-
-### 3. Register Your Game
-
-In `script.js`, register your game with the game registry:
-
-```javascript
-gameRegistry.registerGame({
-  id: 'your-game-name',           // Unique identifier (kebab-case)
-  name: 'Your Game Name',         // Display name for the tile
-  description: 'Brief description of your game',
-  thumbnail: null,                // Optional: URL to thumbnail image
-  route: '/your-game-name',       // URL path for the game
-  loader: async () => {
-    const module = await import('./src/games/your-game-name/index.js');
-    return new module.default();
-  }
-});
-```
-
-### 4. Test Your Game
-
-Your game will automatically:
-- Appear as a tile on the landing page
-- Be accessible via its route (e.g., `/your-game-name`)
-- Support browser back/forward navigation
-- Work with direct URL access
-
-### Game Development Tips
-
-- **Container-based**: Your game should render within the provided container, not assume full page control
-- **Cleanup**: Always implement `destroy()` to prevent memory leaks when users navigate away
-- **Responsive**: Design your game to work on different screen sizes
-- **State Management**: Handle your own game state; it won't persist across navigation by default
-- **Styling**: Add game-specific styles that don't conflict with the platform or other games
 
 ## Setup
 
@@ -212,46 +196,49 @@ npm run test:ui
 
 ## Architecture
 
-### Client-Side Routing
+### Simple Single-Page Application
 
-The platform uses a custom client-side router that:
-- Manages navigation without full page reloads
-- Updates the browser URL using the History API
-- Handles browser back/forward buttons
-- Supports direct URL access to games
-- Provides 404 handling for invalid routes
+The platform uses a straightforward tab-based architecture:
 
-### Navigation Flow
+**Key Design Principles:**
+- **No routing complexity**: Simple show/hide of game containers
+- **State preservation**: Games stay initialized when switching tabs
+- **Direct imports**: Both games load on page initialization
+- **GitHub Pages compatible**: Works perfectly with static file serving
 
+### Tab Switching
+
+The application uses simple DOM manipulation to switch between games:
+
+1. **Page Load**: Both games initialize in their dedicated containers
+2. **Tab Click**: Hide all containers, show selected container
+3. **Visual Feedback**: Update tab styling to show active game
+4. **State Maintained**: Game instances persist across tab switches
+
+**Implementation:**
+```javascript
+function showGame(gameName) {
+  // Hide all game containers
+  document.querySelectorAll('.game-container').forEach(container => {
+    container.style.display = 'none';
+  });
+  
+  // Show selected game container
+  document.getElementById(`${gameName}-container`).style.display = 'block';
+  
+  // Update tab styling
+  updateTabStyles(gameName);
+}
 ```
-Landing Page (/)
-    ↓ Click game tile
-Game Page (/game-name)
-    ↓ Click "Back to Games"
-Landing Page (/)
-```
 
-**URL Structure:**
-- `/` - Landing page with all games
-- `/tic-tac-toe` - Tic-tac-toe game
-- Future games will follow the pattern: `/game-name`
+### Game Lifecycle
 
-**Browser Integration:**
-- Back button: Returns to previous page
-- Forward button: Goes to next page in history
-- Refresh: Stays on current page
-- Direct URL: Loads the specified page directly
+Each game follows a simple lifecycle:
 
-### Component Lifecycle
-
-Each game follows a standard lifecycle:
-
-1. **Registration**: Game is registered in the game registry with metadata
-2. **Discovery**: Game appears as a tile on the landing page
-3. **Loading**: When clicked, game module is dynamically imported
-4. **Initialization**: Game's `init(container)` method is called
-5. **Active**: Game runs and handles user interaction
-6. **Cleanup**: When navigating away, game's `destroy()` method is called
+1. **Initialization**: On page load, both games' `init(container)` methods are called
+2. **Active**: Game runs and handles user interaction in its container
+3. **Hidden**: When tab switches, container is hidden but game instance persists
+4. **Shown**: When tab is clicked again, container is shown with preserved state
 
 ## Testing Strategy
 
@@ -267,11 +254,14 @@ Each property-based test runs 100 iterations by default to ensure comprehensive 
 The platform includes comprehensive tests for:
 
 **Platform Components:**
-- Router: Navigation, URL management, history handling
-- Landing Page: Game tile rendering, click handlers, cleanup
-- Game Registry: Registration, retrieval, validation
-- Error Handler: Invalid routes, game loading failures
-- Navigation: Integration tests for complete navigation flows
+- Tab Switching: Container visibility, tab styling, state preservation
+- Integration: Page load, game initialization, tab navigation
+
+**Snake Game:**
+- Game Logic: Movement, collision detection, food generation
+- State Manager: State transitions, score tracking
+- Input Handler: Keyboard and touch input processing
+- UI Controller: Rendering, animations
 
 **Tic-Tac-Toe Game:**
 - Game Logic: Win detection, move validation, battle mode

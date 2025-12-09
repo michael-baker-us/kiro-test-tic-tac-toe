@@ -7,19 +7,17 @@
   <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-  <!-- Application shell with containers for different pages -->
+  <!-- Application shell with tab-based navigation -->
   <div id="app">
-    <!-- Landing page container -->
-    <div id="landing-container" class="page-container"></div>
+    <!-- Tab Navigation -->
+    <nav class="game-tabs">
+      <button class="tab-button active" data-game="snake">🐍 Snake</button>
+      <button class="tab-button" data-game="tic-tac-toe">⭕ Tic-Tac-Toe</button>
+    </nav>
     
-    <!-- Game page container -->
-    <div id="game-container" class="page-container" style="display: none;">
-      <!-- Back button for returning to landing page -->
-      <button id="back-button" class="back-button">← Back to Games</button>
-      
-      <!-- Game content will be rendered here -->
-      <div id="game-content"></div>
-    </div>
+    <!-- Game Containers -->
+    <div id="snake-container" class="game-container"></div>
+    <div id="tic-tac-toe-container" class="game-container" style="display: none;"></div>
   </div>
   
   <script type="module" src="script.js"></script>

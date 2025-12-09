@@ -440,251 +440,99 @@ h1 {
   .score-value {
     font-size: 1.3rem;
   }
-
-  .landing-title {
-    font-size: 2rem;
-    margin-bottom: 30px;
-  }
-
-  .game-tiles {
-    grid-template-columns: 1fr;
-    gap: 20px;
-    padding: 10px;
-  }
-
-  .game-tile {
-    padding: 15px;
-  }
-
-  .game-name {
-    font-size: 1.3rem;
-  }
-
-  .game-description {
-    font-size: 0.95rem;
-  }
 }
 
-/* Multi-page navigation styles */
+/* Tab-based navigation styles - Requirements 3.1, 3.2, 3.3 */
 #app {
   width: 100%;
   max-width: 1200px;
-}
-
-.page-container {
   background: white;
   border-radius: 20px;
-  padding: 40px;
   box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
-  width: 100%;
-}
-
-/* Back button styles */
-.back-button {
-  background: #667eea;
-  color: white;
-  border: none;
-  padding: 12px 24px;
-  border-radius: 8px;
-  font-size: 1rem;
-  cursor: pointer;
-  margin-bottom: 20px;
-  transition: all 0.3s ease;
-  font-weight: 500;
-}
-
-.back-button:hover {
-  background: #5568d3;
-  transform: translateY(-2px);
-  box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4);
-}
-
-.back-button:active {
-  transform: translateY(0);
-}
-
-/* Landing page styles */
-.landing-page {
-  width: 100%;
-  max-width: 1200px;
-  margin: 0 auto;
-}
-
-.landing-title {
-  text-align: center;
-  color: #333;
-  margin-bottom: 40px;
-  font-size: 2.5rem;
-  font-weight: 600;
-}
-
-/* Responsive grid for game tiles - Requirement 1.4 */
-.game-tiles {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-  gap: 30px;
-  padding: 20px;
-  justify-items: stretch;
-  align-items: stretch;
-}
-
-/* Game tile styling - Requirements 2.3, 2.4, 7.1, 7.2, 7.3 */
-.game-tile {
-  background: white;
-  border-radius: 15px;
-  padding: 25px;
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
-  cursor: pointer;
-  transition: all 0.3s ease;
-  border: 3px solid transparent;
-  display: flex;
-  flex-direction: column;
-  position: relative;
   overflow: hidden;
 }
 
-/* Visual indication of clickability - Requirement 2.3 */
-.game-tile::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background: linear-gradient(135deg, rgba(102, 126, 234, 0.05) 0%, rgba(118, 75, 162, 0.05) 100%);
-  opacity: 0;
-  transition: opacity 0.3s ease;
-  pointer-events: none;
-}
-
-/* Hover effects - Requirement 2.4 */
-.game-tile:hover {
-  transform: translateY(-8px);
-  box-shadow: 0 12px 30px rgba(102, 126, 234, 0.25);
-  border-color: #667eea;
-}
-
-.game-tile:hover::before {
-  opacity: 1;
-}
-
-.game-tile:active {
-  transform: translateY(-4px);
-  box-shadow: 0 8px 20px rgba(102, 126, 234, 0.2);
-}
-
-/* Thumbnail styling */
-.game-thumbnail {
-  width: 100%;
-  height: 180px;
-  object-fit: cover;
-  border-radius: 10px;
-  margin-bottom: 15px;
-  background: #f8f9fa;
-}
-
-.game-tile-content {
-  flex: 1;
+/* Tab navigation bar - Requirement 3.1 */
+.game-tabs {
   display: flex;
-  flex-direction: column;
-  position: relative;
-  z-index: 1;
+  justify-content: center;
+  gap: 0;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  padding: 0;
+  border-bottom: 3px solid #5568d3;
 }
 
-/* Visual hierarchy with clear typography - Requirement 7.2 */
-.game-name {
-  font-size: 1.6rem;
-  color: #333;
-  margin: 0 0 12px 0;
+/* Tab button styling - Requirements 3.2, 3.3 */
+.tab-button {
+  flex: 1;
+  max-width: 300px;
+  padding: 20px 30px;
+  font-size: 1.3rem;
   font-weight: 600;
-  line-height: 1.3;
+  color: rgba(255, 255, 255, 0.7);
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  position: relative;
+  border-bottom: 4px solid transparent;
 }
 
-.game-description {
-  font-size: 1rem;
-  color: #666;
-  line-height: 1.6;
-  margin: 0;
+/* Hover effects - Requirement 3.3 */
+.tab-button:hover {
+  color: rgba(255, 255, 255, 0.95);
+  background: rgba(255, 255, 255, 0.1);
 }
 
-/* Empty state message */
-.empty-message {
-  text-align: center;
-  font-size: 1.2rem;
-  color: #666;
-  padding: 60px 20px;
-  background: #f8f9fa;
-  border-radius: 15px;
-  margin: 20px;
-  border: 2px dashed #dee2e6;
+/* Active tab styling - Requirement 3.2 */
+.tab-button.active {
+  color: white;
+  background: rgba(255, 255, 255, 0.15);
+  border-bottom-color: #FFD700;
 }
 
-/* Game container adjustments */
-#game-container {
-  min-height: 400px;
-  max-width: 600px;
-  margin: 0 auto;
+.tab-button:focus {
+  outline: 2px solid rgba(255, 255, 255, 0.5);
+  outline-offset: -2px;
 }
 
-#game-content {
-  width: 100%;
-  max-width: 500px;
-  margin: 0 auto;
+/* Game container styling - Requirements 1.2, 2.5 */
+.game-container {
+  padding: 40px;
+  min-height: 500px;
+  display: block;
 }
 
-/* Ensure tic-tac-toe game works in container */
-.tic-tac-toe-game {
-  width: 100%;
-  max-width: 500px;
-  margin: 0 auto;
+.game-container[style*="display: none"] {
+  display: none !important;
 }
 
-/* Responsive adjustments - Requirement 7.4 */
+/* Responsive design for tab navigation - Requirement 3.5 */
 @media (max-width: 768px) {
-  .game-tiles {
-    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
-    gap: 20px;
+  .tab-button {
+    padding: 16px 20px;
+    font-size: 1.1rem;
   }
   
-  .landing-title {
-    font-size: 2rem;
-  }
-  
-  .page-container {
-    padding: 20px;
-  }
-  
-  .game-tile {
-    padding: 20px;
+  .game-container {
+    padding: 30px 20px;
   }
 }
 
 @media (max-width: 480px) {
-  .game-tiles {
-    grid-template-columns: 1fr;
-    gap: 20px;
-    padding: 10px;
+  #app {
+    border-radius: 10px;
   }
   
-  .landing-title {
-    font-size: 1.8rem;
-    margin-bottom: 30px;
+  .tab-button {
+    padding: 14px 16px;
+    font-size: 1rem;
+    max-width: none;
   }
   
-  .game-tile {
-    padding: 18px;
-  }
-  
-  .game-name {
-    font-size: 1.4rem;
-  }
-  
-  .game-description {
-    font-size: 0.95rem;
-  }
-  
-  .game-thumbnail {
-    height: 150px;
+  .game-container {
+    padding: 20px 15px;
+    min-height: 400px;
   }
 }
 
