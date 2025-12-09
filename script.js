@@ -2,11 +2,13 @@
 import createTicTacToeGame from './src/games/tic-tac-toe/index.js';
 import createSnakeGame from './src/games/snake/index.js';
 import createTetrisGame from './src/games/tetris/index.js';
+import createFlappyBirdGame from './src/games/flappy-bird/index.js';
 
 // Game instances
 let snakeGame = null;
 let ticTacToeGame = null;
 let tetrisGame = null;
+let flappyBirdGame = null;
 
 // Current active game
 let activeGame = 'snake';
@@ -18,6 +20,7 @@ async function initGames() {
   const snakeContainer = document.getElementById('snake-container');
   const ticTacToeContainer = document.getElementById('tic-tac-toe-container');
   const tetrisContainer = document.getElementById('tetris-container');
+  const flappyBirdContainer = document.getElementById('flappy-bird-container');
   
   try {
     // Initialize Snake game
@@ -31,6 +34,10 @@ async function initGames() {
     // Initialize Tetris game
     tetrisGame = createTetrisGame();
     await tetrisGame.init(tetrisContainer);
+    
+    // Initialize Flappy Bird game
+    flappyBirdGame = createFlappyBirdGame();
+    await flappyBirdGame.init(flappyBirdContainer);
     
     // Show default game
     showGame('snake');
@@ -48,22 +55,27 @@ async function initGames() {
 
 /**
  * Switch between games
- * @param {string} gameName - Name of the game to show ('snake', 'tic-tac-toe', or 'tetris')
+ * @param {string} gameName - Name of the game to show ('snake', 'tic-tac-toe', 'tetris', or 'flappy-bird')
  */
 function showGame(gameName) {
   const snakeContainer = document.getElementById('snake-container');
   const ticTacToeContainer = document.getElementById('tic-tac-toe-container');
   const tetrisContainer = document.getElementById('tetris-container');
+  const flappyBirdContainer = document.getElementById('flappy-bird-container');
   
   // Pause the currently active game when switching away
   if (activeGame === 'tetris' && tetrisGame && gameName !== 'tetris') {
     tetrisGame.pause();
+  }
+  if (activeGame === 'flappy-bird' && flappyBirdGame && gameName !== 'flappy-bird') {
+    flappyBirdGame.pause();
   }
   
   // Hide all containers
   snakeContainer.style.display = 'none';
   ticTacToeContainer.style.display = 'none';
   tetrisContainer.style.display = 'none';
+  flappyBirdContainer.style.display = 'none';
   
   // Show selected container
   if (gameName === 'snake') {
@@ -75,6 +87,12 @@ function showGame(gameName) {
     // Resume Tetris game when switching back to it
     if (tetrisGame) {
       tetrisGame.resume();
+    }
+  } else if (gameName === 'flappy-bird') {
+    flappyBirdContainer.style.display = 'block';
+    // Resume Flappy Bird game when switching back to it
+    if (flappyBirdGame) {
+      flappyBirdGame.resume();
     }
   }
   

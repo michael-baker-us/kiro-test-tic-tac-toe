@@ -1700,3 +1700,401 @@ h1 {
 .tetris-game .primary-btn {
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
+
+/* ============================================
+   Flappy Bird Game Styles
+   Requirements: 6.2, 6.3
+   ============================================ */
+
+/* Flappy Bird game container - Requirement 6.3 */
+.flappy-bird-game {
+  width: 100%;
+  max-width: 500px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+}
+
+/* Game header with title */
+.flappy-bird-game .game-header {
+  width: 100%;
+  text-align: center;
+  margin-bottom: 10px;
+}
+
+.flappy-bird-game .game-header h1 {
+  font-size: 2rem;
+  color: #333;
+  margin: 0;
+  font-weight: 600;
+}
+
+/* Canvas container - Requirements 6.2, 6.3 */
+.flappy-bird-canvas-container {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  max-width: 400px;
+  margin: 0 auto;
+}
+
+/* Canvas styling - Requirements 6.2, 6.3 */
+#flappy-bird-canvas {
+  border: 4px solid #87CEEB;
+  border-radius: 12px;
+  background: #87CEEB;
+  box-shadow: 0 8px 24px rgba(135, 206, 235, 0.4);
+  display: block;
+  max-width: 100%;
+  height: auto;
+  /* Prevent zoom on double-tap - Requirement 6.2 */
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
+  user-select: none;
+  cursor: pointer;
+}
+
+/* Start menu overlay styling */
+.flappy-bird-start-menu {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background: rgba(135, 206, 235, 0.95);
+  border-radius: 8px;
+  pointer-events: none;
+}
+
+.flappy-bird-start-menu h2 {
+  font-size: 2.5rem;
+  color: #333;
+  margin: 0 0 20px 0;
+  text-shadow: 2px 2px 4px rgba(255, 255, 255, 0.8);
+  font-weight: bold;
+}
+
+.flappy-bird-start-menu p {
+  font-size: 1.2rem;
+  color: #666;
+  margin: 5px 0;
+  text-align: center;
+}
+
+.flappy-bird-start-menu .high-score {
+  font-size: 1.1rem;
+  color: #FFD700;
+  font-weight: 600;
+  margin-top: 15px;
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
+}
+
+/* Game over overlay styling */
+.flappy-bird-game-over {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background: rgba(0, 0, 0, 0.85);
+  border-radius: 8px;
+  animation: fadeIn 0.3s ease-in-out;
+  pointer-events: none;
+}
+
+.flappy-bird-game-over h2 {
+  font-size: 3rem;
+  color: #FF5252;
+  margin: 0 0 20px 0;
+  text-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+  animation: gameOverPulse 1s ease-in-out infinite;
+}
+
+.flappy-bird-game-over .score-display {
+  font-size: 1.5rem;
+  color: white;
+  margin: 0 0 10px 0;
+  font-weight: 500;
+}
+
+.flappy-bird-game-over .score-display .score-value {
+  font-size: 2rem;
+  font-weight: 700;
+  color: #FFD700;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+}
+
+.flappy-bird-game-over .high-score-display {
+  font-size: 1.2rem;
+  color: #ccc;
+  margin: 0 0 25px 0;
+  font-weight: 500;
+}
+
+.flappy-bird-game-over .high-score-display .score-value {
+  font-size: 1.4rem;
+  font-weight: 700;
+  color: #FFD700;
+}
+
+.flappy-bird-game-over .restart-hint {
+  font-size: 1.1rem;
+  color: #ccc;
+  margin: 0;
+  font-style: italic;
+}
+
+/* Instructions section - Requirement 6.3 */
+.flappy-bird-instructions {
+  width: 100%;
+  text-align: center;
+  padding: 15px 20px;
+  background: linear-gradient(135deg, rgba(135, 206, 235, 0.15) 0%, rgba(224, 246, 255, 0.15) 100%);
+  border: 2px dashed #87CEEB;
+  border-radius: 10px;
+  margin-top: 10px;
+}
+
+.flappy-bird-instructions h3 {
+  font-size: 1.2rem;
+  color: #333;
+  margin: 0 0 10px 0;
+  font-weight: 600;
+}
+
+.flappy-bird-instructions p {
+  margin: 5px 0;
+  font-size: 1rem;
+  color: #666;
+  line-height: 1.5;
+}
+
+.flappy-bird-instructions .control-key {
+  display: inline-block;
+  padding: 2px 8px;
+  background: #f8f9fa;
+  border: 2px solid #dee2e6;
+  border-radius: 4px;
+  font-family: 'Courier New', monospace;
+  font-weight: 600;
+  color: #667eea;
+  margin: 0 3px;
+}
+
+/* Mobile-specific instructions */
+.flappy-bird-instructions .mobile-hint {
+  display: none;
+  font-size: 0.95rem;
+  color: #87CEEB;
+  font-weight: 500;
+  margin-top: 8px;
+}
+
+/* Show mobile hints on touch devices - Requirement 6.2 */
+@media (hover: none) {
+  .flappy-bird-instructions .mobile-hint {
+    display: block;
+  }
+}
+
+/* Responsive design for tablets - Requirement 6.3 */
+@media (max-width: 768px) {
+  .flappy-bird-game {
+    max-width: 100%;
+    gap: 15px;
+  }
+
+  .flappy-bird-game .game-header h1 {
+    font-size: 1.8rem;
+  }
+
+  .flappy-bird-canvas-container {
+    max-width: 380px;
+  }
+
+  #flappy-bird-canvas {
+    border-width: 3px;
+    border-radius: 10px;
+  }
+
+  .flappy-bird-start-menu h2 {
+    font-size: 2rem;
+  }
+
+  .flappy-bird-start-menu p {
+    font-size: 1.1rem;
+  }
+
+  .flappy-bird-game-over h2 {
+    font-size: 2.5rem;
+  }
+
+  .flappy-bird-game-over .score-display {
+    font-size: 1.3rem;
+  }
+
+  .flappy-bird-game-over .score-display .score-value {
+    font-size: 1.8rem;
+  }
+
+  .flappy-bird-instructions {
+    padding: 12px 16px;
+  }
+
+  .flappy-bird-instructions h3 {
+    font-size: 1.1rem;
+  }
+
+  .flappy-bird-instructions p {
+    font-size: 0.95rem;
+  }
+}
+
+/* Responsive design for mobile devices - Requirement 6.3 */
+@media (max-width: 480px) {
+  .flappy-bird-game {
+    gap: 12px;
+  }
+
+  .flappy-bird-game .game-header h1 {
+    font-size: 1.6rem;
+  }
+
+  .flappy-bird-canvas-container {
+    max-width: 100%;
+    padding: 0 10px;
+  }
+
+  #flappy-bird-canvas {
+    border-width: 2px;
+    border-radius: 8px;
+  }
+
+  .flappy-bird-start-menu h2 {
+    font-size: 1.8rem;
+    margin-bottom: 15px;
+  }
+
+  .flappy-bird-start-menu p {
+    font-size: 1rem;
+  }
+
+  .flappy-bird-start-menu .high-score {
+    font-size: 1rem;
+    margin-top: 12px;
+  }
+
+  .flappy-bird-game-over h2 {
+    font-size: 2rem;
+    margin-bottom: 15px;
+  }
+
+  .flappy-bird-game-over .score-display {
+    font-size: 1.2rem;
+    margin-bottom: 8px;
+  }
+
+  .flappy-bird-game-over .score-display .score-value {
+    font-size: 1.6rem;
+  }
+
+  .flappy-bird-game-over .high-score-display {
+    font-size: 1.1rem;
+    margin-bottom: 20px;
+  }
+
+  .flappy-bird-game-over .high-score-display .score-value {
+    font-size: 1.3rem;
+  }
+
+  .flappy-bird-game-over .restart-hint {
+    font-size: 1rem;
+  }
+
+  .flappy-bird-instructions {
+    padding: 10px 12px;
+    margin-top: 8px;
+  }
+
+  .flappy-bird-instructions h3 {
+    font-size: 1rem;
+    margin-bottom: 8px;
+  }
+
+  .flappy-bird-instructions p {
+    font-size: 0.9rem;
+    margin: 4px 0;
+  }
+
+  .flappy-bird-instructions .control-key {
+    padding: 1px 6px;
+    font-size: 0.9rem;
+  }
+}
+
+/* Landscape orientation adjustments for mobile - Requirement 6.3 */
+@media (max-width: 768px) and (orientation: landscape) {
+  .flappy-bird-game {
+    max-width: 90%;
+  }
+
+  .flappy-bird-canvas-container {
+    max-width: 450px;
+  }
+
+  .flappy-bird-game .game-header h1 {
+    font-size: 1.5rem;
+  }
+
+  .flappy-bird-start-menu h2 {
+    font-size: 1.8rem;
+  }
+
+  .flappy-bird-game-over h2 {
+    font-size: 2rem;
+  }
+
+  .flappy-bird-instructions {
+    padding: 10px 15px;
+  }
+}
+
+/* High DPI display support */
+@media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
+  #flappy-bird-canvas {
+    image-rendering: -webkit-optimize-contrast;
+    image-rendering: crisp-edges;
+  }
+}
+
+/* Accessibility improvements */
+#flappy-bird-canvas:focus {
+  outline: 3px solid rgba(135, 206, 235, 0.6);
+  outline-offset: 2px;
+}
+
+/* Prevent text selection during gameplay */
+.flappy-bird-game {
+  user-select: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+}
+
+/* Smooth transitions */
+.flappy-bird-start-menu,
+.flappy-bird-game-over {
+  transition: opacity 0.3s ease-in-out;
+}
