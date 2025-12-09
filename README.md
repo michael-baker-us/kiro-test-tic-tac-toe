@@ -1,6 +1,6 @@
 # Multi-Game Platform
 
-A browser-based gaming platform featuring multiple games with simple tab-based navigation. Currently includes Snake and Tic-Tac-Toe games with comprehensive testing using property-based testing. Designed to work perfectly on GitHub Pages.
+A browser-based gaming platform featuring multiple games with simple tab-based navigation. Currently includes Snake, Tetris, and Tic-Tac-Toe games with comprehensive testing using property-based testing. Designed to work perfectly on GitHub Pages.
 
 ## Platform Features
 
@@ -17,6 +17,29 @@ A browser-based gaming platform featuring multiple games with simple tab-based n
 - **Score Tracking**: Keep track of your current score
 - **Collision Detection**: Game ends when snake hits walls or itself
 - **Smooth Animation**: Responsive game loop with consistent timing
+
+## Tetris Game Features
+
+- **Classic Block-Stacking Gameplay**: Seven standard Tetromino pieces (I, O, T, S, Z, J, L)
+- **Keyboard Controls**: 
+  - Arrow keys for movement (left/right/down)
+  - Up arrow or X for clockwise rotation
+  - Z for counter-clockwise rotation
+  - Space bar for hard drop
+  - P or Escape to pause
+- **Mobile Touch Controls**: 
+  - Swipe left/right to move pieces horizontally
+  - Swipe down for soft drop
+  - Tap to rotate clockwise
+  - Double tap for hard drop
+- **Standard Tetris Features**:
+  - Super Rotation System (SRS) with wall kicks
+  - Ghost piece showing landing position
+  - Next piece preview
+  - Progressive difficulty with increasing drop speed
+  - Line clearing with standard scoring (100/300/500/800 × level)
+  - Hard drop bonus scoring (2 points per row)
+- **Visual Polish**: Standard Tetris colors, smooth animations, pause/game over screens
 
 ## Tic-Tac-Toe Game Features
 
@@ -44,9 +67,10 @@ A browser-based gaming platform featuring multiple games with simple tab-based n
 ## Getting Started
 
 1. Open `index.html` in a web browser
-2. You'll see tabs at the top for Snake and Tic-Tac-Toe
+2. You'll see tabs at the top for Snake, Tetris, and Tic-Tac-Toe
 3. Click on a tab to switch between games
 4. Your game progress is preserved when switching tabs
+5. On mobile devices, touch controls are automatically enabled
 
 ## How to Play Tic-Tac-Toe
 
@@ -95,6 +119,14 @@ A browser-based gaming platform featuring multiple games with simple tab-based n
 │       │   ├── stateManager.js    # State management
 │       │   ├── inputHandler.js    # Keyboard/touch input
 │       │   └── uiController.js    # UI rendering
+│       ├── tetris/
+│       │   ├── index.js           # Game entry point
+│       │   ├── gameLogic.js       # Core Tetris logic
+│       │   ├── gameLoop.js        # Game loop management
+│       │   ├── stateManager.js    # State management
+│       │   ├── inputHandler.js    # Keyboard/touch input
+│       │   ├── pieceDefinitions.js # Tetromino shapes and colors
+│       │   └── uiController.js    # Canvas rendering
 │       └── tic-tac-toe/
 │           ├── index.js           # Game entry point
 │           ├── gameLogic.js       # Core game logic (pure functions)
@@ -118,6 +150,17 @@ A browser-based gaming platform featuring multiple games with simple tab-based n
 │   ├── snakeStateManager.property.test.js
 │   ├── inputHandler.test.js
 │   ├── inputHandler.property.test.js
+│   ├── tetrisGameLogic.test.js
+│   ├── tetrisGameLogic.property.test.js
+│   ├── tetrisStateManager.test.js
+│   ├── tetrisStateManager.property.test.js
+│   ├── tetrisInputHandler.test.js
+│   ├── tetrisUIController.test.js
+│   ├── tetrisGameLoop.test.js
+│   ├── tetrisGameLoop.property.test.js
+│   ├── tetrisPieceDefinitions.property.test.js
+│   ├── tetrisGameWrapper.test.js
+│   ├── tetrisIntegration.test.js
 │   ├── tabSwitching.property.test.js
 │   ├── integration.test.js
 │   └── ticTacToeGame.test.js
@@ -262,6 +305,15 @@ The platform includes comprehensive tests for:
 - State Manager: State transitions, score tracking
 - Input Handler: Keyboard and touch input processing
 - UI Controller: Rendering, animations
+
+**Tetris Game:**
+- Game Logic: Collision detection, rotation with wall kicks, line clearing, scoring
+- State Manager: State transitions, piece spawning, level progression
+- Input Handler: Keyboard and touch input processing (swipe, tap, double tap)
+- UI Controller: Canvas rendering, ghost piece, next piece preview
+- Game Loop: Automatic dropping, lock delay timing
+- Piece Definitions: Tetromino shapes, colors, wall kick data
+- Integration: Complete game flows with 19 property-based tests
 
 **Tic-Tac-Toe Game:**
 - Game Logic: Win detection, move validation, battle mode

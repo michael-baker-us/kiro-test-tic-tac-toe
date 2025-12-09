@@ -1,20 +1,23 @@
 // Main application entry point
 import createTicTacToeGame from './src/games/tic-tac-toe/index.js';
 import createSnakeGame from './src/games/snake/index.js';
+import createTetrisGame from './src/games/tetris/index.js';
 
 // Game instances
 let snakeGame = null;
 let ticTacToeGame = null;
+let tetrisGame = null;
 
 // Current active game
 let activeGame = 'snake';
 
 /**
- * Initialize both games
+ * Initialize all games
  */
 async function initGames() {
   const snakeContainer = document.getElementById('snake-container');
   const ticTacToeContainer = document.getElementById('tic-tac-toe-container');
+  const tetrisContainer = document.getElementById('tetris-container');
   
   try {
     // Initialize Snake game
@@ -24,6 +27,10 @@ async function initGames() {
     // Initialize Tic-Tac-Toe game
     ticTacToeGame = createTicTacToeGame();
     await ticTacToeGame.init(ticTacToeContainer);
+    
+    // Initialize Tetris game
+    tetrisGame = createTetrisGame();
+    await tetrisGame.init(tetrisContainer);
     
     // Show default game
     showGame('snake');
@@ -41,21 +48,34 @@ async function initGames() {
 
 /**
  * Switch between games
- * @param {string} gameName - Name of the game to show ('snake' or 'tic-tac-toe')
+ * @param {string} gameName - Name of the game to show ('snake', 'tic-tac-toe', or 'tetris')
  */
 function showGame(gameName) {
   const snakeContainer = document.getElementById('snake-container');
   const ticTacToeContainer = document.getElementById('tic-tac-toe-container');
+  const tetrisContainer = document.getElementById('tetris-container');
+  
+  // Pause the currently active game when switching away
+  if (activeGame === 'tetris' && tetrisGame && gameName !== 'tetris') {
+    tetrisGame.pause();
+  }
   
   // Hide all containers
   snakeContainer.style.display = 'none';
   ticTacToeContainer.style.display = 'none';
+  tetrisContainer.style.display = 'none';
   
   // Show selected container
   if (gameName === 'snake') {
     snakeContainer.style.display = 'block';
   } else if (gameName === 'tic-tac-toe') {
     ticTacToeContainer.style.display = 'block';
+  } else if (gameName === 'tetris') {
+    tetrisContainer.style.display = 'block';
+    // Resume Tetris game when switching back to it
+    if (tetrisGame) {
+      tetrisGame.resume();
+    }
   }
   
   activeGame = gameName;

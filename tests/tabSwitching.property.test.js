@@ -18,9 +18,11 @@ describe('Tab Switching Properties', () => {
             <nav class="game-tabs">
               <button class="tab-button active" data-game="snake">🐍 Snake</button>
               <button class="tab-button" data-game="tic-tac-toe">⭕ Tic-Tac-Toe</button>
+              <button class="tab-button" data-game="tetris">🟦 Tetris</button>
             </nav>
             <div id="snake-container" class="game-container"></div>
             <div id="tic-tac-toe-container" class="game-container" style="display: none;"></div>
+            <div id="tetris-container" class="game-container" style="display: none;"></div>
           </div>
         </body>
       </html>
@@ -47,16 +49,20 @@ describe('Tab Switching Properties', () => {
   function showGame(gameName) {
     const snakeContainer = document.getElementById('snake-container');
     const ticTacToeContainer = document.getElementById('tic-tac-toe-container');
+    const tetrisContainer = document.getElementById('tetris-container');
     
     // Hide all containers
     snakeContainer.style.display = 'none';
     ticTacToeContainer.style.display = 'none';
+    tetrisContainer.style.display = 'none';
     
     // Show selected container
     if (gameName === 'snake') {
       snakeContainer.style.display = 'block';
     } else if (gameName === 'tic-tac-toe') {
       ticTacToeContainer.style.display = 'block';
+    } else if (gameName === 'tetris') {
+      tetrisContainer.style.display = 'block';
     }
   }
 
@@ -75,7 +81,7 @@ describe('Tab Switching Properties', () => {
   // **Feature: github-pages-simplification, Property 1: Single visible game container**
   // **Validates: Requirements 1.2**
   it('Property 1: Single visible game container - for any sequence of tab clicks, exactly one game container is visible', () => {
-    const gameNameArb = fc.constantFrom('snake', 'tic-tac-toe');
+    const gameNameArb = fc.constantFrom('snake', 'tic-tac-toe', 'tetris');
     const clickSequenceArb = fc.array(gameNameArb, { minLength: 1, maxLength: 10 });
     
     fc.assert(
@@ -83,10 +89,12 @@ describe('Tab Switching Properties', () => {
         // Reset DOM for each property test iteration
         const snakeContainer = document.getElementById('snake-container');
         const ticTacToeContainer = document.getElementById('tic-tac-toe-container');
+        const tetrisContainer = document.getElementById('tetris-container');
         
         // Set initial state
         snakeContainer.style.display = 'block';
         ticTacToeContainer.style.display = 'none';
+        tetrisContainer.style.display = 'none';
         
         // Simulate clicking through the sequence
         sequence.forEach(gameName => {
@@ -94,7 +102,7 @@ describe('Tab Switching Properties', () => {
         });
         
         // Count visible containers
-        const containers = [snakeContainer, ticTacToeContainer];
+        const containers = [snakeContainer, ticTacToeContainer, tetrisContainer];
         const visibleCount = containers.filter(container => {
           const display = container.style.display;
           return display !== 'none' && display !== '';
@@ -110,7 +118,7 @@ describe('Tab Switching Properties', () => {
   // **Feature: github-pages-simplification, Property 2: Active tab styling consistency**
   // **Validates: Requirements 3.2**
   it('Property 2: Active tab styling consistency - for any tab selection, selected tab has active class and others do not', () => {
-    const gameNameArb = fc.constantFrom('snake', 'tic-tac-toe');
+    const gameNameArb = fc.constantFrom('snake', 'tic-tac-toe', 'tetris');
     
     fc.assert(
       fc.property(gameNameArb, (selectedGame) => {
@@ -144,7 +152,7 @@ describe('Tab Switching Properties', () => {
   // **Feature: github-pages-simplification, Property 3: Game instance persistence**
   // **Validates: Requirements 1.3, 2.3, 2.4**
   it('Property 3: Game instance persistence - for any sequence of tab switches, game instances are never recreated', () => {
-    const gameNameArb = fc.constantFrom('snake', 'tic-tac-toe');
+    const gameNameArb = fc.constantFrom('snake', 'tic-tac-toe', 'tetris');
     const switchSequenceArb = fc.array(gameNameArb, { minLength: 2, maxLength: 10 });
     
     fc.assert(
@@ -152,10 +160,12 @@ describe('Tab Switching Properties', () => {
         // Create mock game instances with unique identifiers
         const snakeInstance = { id: 'snake-instance-' + Math.random(), init: () => {}, destroy: () => {} };
         const ticTacToeInstance = { id: 'tic-tac-toe-instance-' + Math.random(), init: () => {}, destroy: () => {} };
+        const tetrisInstance = { id: 'tetris-instance-' + Math.random(), init: () => {}, destroy: () => {}, pause: () => {}, resume: () => {} };
         
         // Store initial instance IDs
         const initialSnakeId = snakeInstance.id;
         const initialTicTacToeId = ticTacToeInstance.id;
+        const initialTetrisId = tetrisInstance.id;
         
         // Simulate tab switches (which should only hide/show containers, not recreate instances)
         sequence.forEach(gameName => {
@@ -167,8 +177,9 @@ describe('Tab Switching Properties', () => {
         // Verify instances still have the same IDs (not recreated)
         const snakeNotRecreated = snakeInstance.id === initialSnakeId;
         const ticTacToeNotRecreated = ticTacToeInstance.id === initialTicTacToeId;
+        const tetrisNotRecreated = tetrisInstance.id === initialTetrisId;
         
-        return snakeNotRecreated && ticTacToeNotRecreated;
+        return snakeNotRecreated && ticTacToeNotRecreated && tetrisNotRecreated;
       }),
       { numRuns: 100 }
     );
