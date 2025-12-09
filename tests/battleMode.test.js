@@ -1,6 +1,6 @@
 // Unit tests for battle mode
 import { describe, it, expect, beforeEach } from 'vitest';
-import { createStateManager } from '../src/stateManager.js';
+import { createStateManager } from '../src/games/tic-tac-toe/stateManager.js';
 
 describe('Battle Mode', () => {
   let stateManager;

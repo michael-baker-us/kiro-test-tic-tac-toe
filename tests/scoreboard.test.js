@@ -1,6 +1,6 @@
 // Unit tests for scoreboard
 import { describe, it, expect, beforeEach, afterEach } from 'vitest';
-import { createScoreboard } from '../src/scoreboard.js';
+import { createScoreboard } from '../src/games/tic-tac-toe/scoreboard.js';
 
 describe('Scoreboard', () => {
   let scoreboard;

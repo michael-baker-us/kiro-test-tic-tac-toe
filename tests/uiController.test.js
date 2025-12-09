@@ -1,8 +1,8 @@
 // Unit tests for UI controller
 import { describe, it, expect, beforeEach } from 'vitest';
-import { createUIController } from '../src/uiController.js';
-import { createStateManager } from '../src/stateManager.js';
-import { createGameController } from '../src/gameController.js';
+import { createUIController } from '../src/games/tic-tac-toe/uiController.js';
+import { createStateManager } from '../src/games/tic-tac-toe/stateManager.js';
+import { createGameController } from '../src/games/tic-tac-toe/gameController.js';
 
 describe('UI Controller', () => {
   let stateManager;

@@ -1,8 +1,8 @@
 // Integration tests for complete game flows
 import { describe, it, expect, beforeEach } from 'vitest';
-import { createStateManager } from '../src/stateManager.js';
-import { createGameController } from '../src/gameController.js';
-import { createUIController } from '../src/uiController.js';
+import { createStateManager } from '../src/games/tic-tac-toe/stateManager.js';
+import { createGameController } from '../src/games/tic-tac-toe/gameController.js';
+import { createUIController } from '../src/games/tic-tac-toe/uiController.js';
 
 describe('Integration Tests', () => {
   let stateManager;

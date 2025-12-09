@@ -1,8 +1,8 @@
 // Property-based tests for state manager
 import { describe, it, expect } from 'vitest';
 import fc from 'fast-check';
-import { createStateManager } from '../src/stateManager.js';
-import { createEmptyBoard } from '../src/gameLogic.js';
+import { createStateManager } from '../src/games/tic-tac-toe/stateManager.js';
+import { createEmptyBoard } from '../src/games/tic-tac-toe/gameLogic.js';
 
 const positionArb = fc.integer({ min: 0, max: 8 });
 

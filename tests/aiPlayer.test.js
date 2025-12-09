@@ -1,7 +1,7 @@
 // Unit tests for AI player
 import { describe, it, expect } from 'vitest';
-import { createAIPlayer } from '../src/aiPlayer.js';
-import { createEmptyBoard, makeMove } from '../src/gameLogic.js';
+import { createAIPlayer } from '../src/games/tic-tac-toe/aiPlayer.js';
+import { createEmptyBoard, makeMove } from '../src/games/tic-tac-toe/gameLogic.js';
 
 describe('AI Player', () => {
   describe('Easy difficulty', () => {

@@ -4,22 +4,23 @@
  * Creates a UI controller for the tic-tac-toe game
  * @param {Object} stateManager - The state manager instance
  * @param {Object} gameController - The game controller instance
+ * @param {HTMLElement} container - Optional container element (defaults to document)
  * @returns {Object} UI controller with methods to render and handle events
  */
-export function createUIController(stateManager, gameController) {
-  const boardElement = document.getElementById('gameBoard');
-  const statusElement = document.getElementById('statusMessage');
-  const turnIndicatorElement = document.getElementById('turnIndicator');
-  const newGameButton = document.getElementById('newGameBtn');
-  const difficultySelector = document.getElementById('difficultySelector');
-  const difficultySelect = document.getElementById('difficulty');
-  const resetScoresButton = document.getElementById('resetScoresBtn');
-  const pvpScoresSection = document.getElementById('pvpScores');
-  const aiScoresSection = document.getElementById('aiScores');
-  const battleModeCheckbox = document.getElementById('battleModeCheckbox');
-  const battleModeToggle = document.getElementById('battleModeToggle');
-  const battleInfo = document.getElementById('battleInfo');
-  const turnsRemainingEl = document.getElementById('turnsRemaining');
+export function createUIController(stateManager, gameController, container = document) {
+  const boardElement = container.querySelector('#gameBoard');
+  const statusElement = container.querySelector('#statusMessage');
+  const turnIndicatorElement = container.querySelector('#turnIndicator');
+  const newGameButton = container.querySelector('#newGameBtn');
+  const difficultySelector = container.querySelector('#difficultySelector');
+  const difficultySelect = container.querySelector('#difficulty');
+  const resetScoresButton = container.querySelector('#resetScoresBtn');
+  const pvpScoresSection = container.querySelector('#pvpScores');
+  const aiScoresSection = container.querySelector('#aiScores');
+  const battleModeCheckbox = container.querySelector('#battleModeCheckbox');
+  const battleModeToggle = container.querySelector('#battleModeToggle');
+  const battleInfo = container.querySelector('#battleInfo');
+  const turnsRemainingEl = container.querySelector('#turnsRemaining');
   
   /**
    * Renders the game board and status based on current state
@@ -52,18 +53,18 @@ export function createUIController(stateManager, gameController) {
     }
     
     // Update PvP scores
-    const pvpXWinsEl = document.getElementById('pvpXWins');
-    const pvpOWinsEl = document.getElementById('pvpOWins');
-    const pvpDrawsEl = document.getElementById('pvpDraws');
+    const pvpXWinsEl = container.querySelector('#pvpXWins');
+    const pvpOWinsEl = container.querySelector('#pvpOWins');
+    const pvpDrawsEl = container.querySelector('#pvpDraws');
     
     if (pvpXWinsEl) pvpXWinsEl.textContent = scores.pvp.xWins;
     if (pvpOWinsEl) pvpOWinsEl.textContent = scores.pvp.oWins;
     if (pvpDrawsEl) pvpDrawsEl.textContent = scores.pvp.draws;
     
     // Update AI scores
-    const aiWinsEl = document.getElementById('aiWins');
-    const aiLossesEl = document.getElementById('aiLosses');
-    const aiDrawsEl = document.getElementById('aiDraws');
+    const aiWinsEl = container.querySelector('#aiWins');
+    const aiLossesEl = container.querySelector('#aiLosses');
+    const aiDrawsEl = container.querySelector('#aiDraws');
     
     if (aiWinsEl) aiWinsEl.textContent = scores.ai.wins;
     if (aiLossesEl) aiLossesEl.textContent = scores.ai.losses;
@@ -216,16 +217,20 @@ export function createUIController(stateManager, gameController) {
    */
   function attachEventListeners() {
     // Attach click handlers to cells
-    const cells = boardElement.querySelectorAll('.cell');
-    cells.forEach((cell, index) => {
-      cell.addEventListener('click', () => handleCellClick(index));
-    });
+    if (boardElement) {
+      const cells = boardElement.querySelectorAll('.cell');
+      cells.forEach((cell, index) => {
+        cell.addEventListener('click', () => handleCellClick(index));
+      });
+    }
     
     // Attach click handler to new game button
-    newGameButton.addEventListener('click', handleNewGameClick);
+    if (newGameButton) {
+      newGameButton.addEventListener('click', handleNewGameClick);
+    }
     
     // Attach game mode radio button handlers
-    const gameModeRadios = document.querySelectorAll('input[name="gameMode"]');
+    const gameModeRadios = container.querySelectorAll('input[name="gameMode"]');
     gameModeRadios.forEach(radio => {
       radio.addEventListener('change', handleGameModeChange);
     });
@@ -297,6 +302,9 @@ export function createUIController(stateManager, gameController) {
     if (battleModeToggle) {
       battleModeToggle.style.display = 'block';
     }
+    
+    // Re-render scoreboard
+    renderScoreboard();
   }
   
   /**

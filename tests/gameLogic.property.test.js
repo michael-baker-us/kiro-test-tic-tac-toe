@@ -8,7 +8,7 @@ import {
   checkWinner,
   isDraw,
   getAvailableMoves
-} from '../src/gameLogic.js';
+} from '../src/games/tic-tac-toe/gameLogic.js';
 
 // Custom arbitraries for tic-tac-toe
 const playerArb = fc.constantFrom('X', 'O');

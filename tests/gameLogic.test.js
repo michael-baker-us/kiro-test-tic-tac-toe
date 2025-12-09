@@ -1,6 +1,6 @@
 // Unit tests for game logic
 import { describe, it, expect } from 'vitest';
-import { createEmptyBoard, checkWinner } from '../src/gameLogic.js';
+import { createEmptyBoard, checkWinner } from '../src/games/tic-tac-toe/gameLogic.js';
 
 describe('Game Logic - Win Detection', () => {
   describe('Horizontal wins', () => {
