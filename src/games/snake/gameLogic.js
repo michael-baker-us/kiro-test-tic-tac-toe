@@ -73,12 +73,13 @@ export function isOppositeDirection(current, newDirection) {
 }
 
 /**
- * Calculates the next head position based on direction
+ * Calculates the next head position based on direction with wrapping
  * @param {Object} head - Current head position {x, y}
  * @param {string} direction - Movement direction
+ * @param {Object} board - Board object with width and height (optional, for wrapping)
  * @returns {Object} New head position {x, y}
  */
-export function getNextHeadPosition(head, direction) {
+export function getNextHeadPosition(head, direction, board = null) {
   const deltas = {
     [DIRECTIONS.UP]: { x: 0, y: -1 },
     [DIRECTIONS.DOWN]: { x: 0, y: 1 },
@@ -87,9 +88,20 @@ export function getNextHeadPosition(head, direction) {
   };
   
   const delta = deltas[direction];
+  let newX = head.x + delta.x;
+  let newY = head.y + delta.y;
+  
+  // Wrap around boundaries if board is provided
+  if (board) {
+    if (newX < 0) newX = board.width - 1;
+    if (newX >= board.width) newX = 0;
+    if (newY < 0) newY = board.height - 1;
+    if (newY >= board.height) newY = 0;
+  }
+  
   return {
-    x: head.x + delta.x,
-    y: head.y + delta.y
+    x: newX,
+    y: newY
   };
 }
 
@@ -97,10 +109,11 @@ export function getNextHeadPosition(head, direction) {
  * Moves the snake in the current direction
  * @param {Object} snake - Snake object with head, body, and direction
  * @param {boolean} grow - Whether to grow (keep tail) or not
+ * @param {Object} board - Board object with width and height (optional, for wrapping)
  * @returns {Object} New snake object after movement
  */
-export function moveSnake(snake, grow = false) {
-  const newHead = getNextHeadPosition(snake.head, snake.direction);
+export function moveSnake(snake, grow = false, board = null) {
+  const newHead = getNextHeadPosition(snake.head, snake.direction, board);
   const newBody = [snake.head, ...snake.body];
   
   // Remove tail unless growing

@@ -876,3 +876,461 @@ h1 {
     width: 100%;
   }
 }
+
+/* ============================================
+   Snake Game Styles
+   Requirements: 7.1, 7.3, 7.4, 8.1, 8.2, 8.3, 8.5
+   ============================================ */
+
+/* Snake game container - Requirement 7.1 */
+.snake-game {
+  width: 100%;
+  max-width: 650px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+}
+
+/* Game header with title and score - Requirement 8.3 */
+.game-header {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 10px;
+  margin-bottom: 10px;
+}
+
+.game-header h1 {
+  font-size: 2rem;
+  color: #333;
+  margin: 0;
+  font-weight: 600;
+}
+
+/* Score display styling - Requirement 8.3 */
+.score-display {
+  font-size: 1.3rem;
+  font-weight: 600;
+  color: #667eea;
+  background: #f8f9fa;
+  padding: 10px 20px;
+  border-radius: 10px;
+  border: 2px solid #dee2e6;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.score-display #score {
+  color: #764ba2;
+  font-size: 1.5rem;
+  min-width: 40px;
+  text-align: center;
+}
+
+/* Canvas styling - Requirements 8.1, 8.2, 8.3 */
+.game-canvas {
+  border: 4px solid #667eea;
+  border-radius: 12px;
+  background: #1a1a1a;
+  box-shadow: 0 8px 24px rgba(102, 126, 234, 0.3);
+  display: block;
+  margin: 0 auto;
+  max-width: 100%;
+  height: auto;
+}
+
+/* Control buttons - Requirements 7.3, 7.4 */
+.game-controls {
+  display: flex;
+  gap: 15px;
+  justify-content: center;
+  width: 100%;
+  padding: 0 10px;
+}
+
+.control-btn {
+  flex: 1;
+  max-width: 150px;
+  padding: 14px 24px;
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: white;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 12px rgba(102, 126, 234, 0.3);
+  /* Touch-friendly size - minimum 44x44px - Requirement 7.3 */
+  min-height: 44px;
+  min-width: 44px;
+}
+
+.control-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(102, 126, 234, 0.4);
+}
+
+.control-btn:active {
+  transform: translateY(0);
+  box-shadow: 0 2px 8px rgba(102, 126, 234, 0.3);
+}
+
+/* Game over overlay - Requirement 8.5 */
+.game-over-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.85);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+  animation: fadeIn 0.3s ease-in-out;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.game-over-overlay h2 {
+  font-size: 3rem;
+  color: #FF5252;
+  margin: 0 0 20px 0;
+  text-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+  animation: gameOverPulse 1s ease-in-out infinite;
+}
+
+@keyframes gameOverPulse {
+  0%, 100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.05);
+  }
+}
+
+.game-over-overlay .final-score {
+  font-size: 1.5rem;
+  color: white;
+  margin: 0 0 30px 0;
+  font-weight: 500;
+}
+
+.game-over-overlay .final-score #final-score {
+  font-size: 2rem;
+  font-weight: 700;
+  color: #FFD700;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+.game-over-overlay .primary-btn {
+  padding: 16px 40px;
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: white;
+  background: linear-gradient(135deg, #4CAF50 0%, #66BB6A 100%);
+  border: none;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 6px 20px rgba(76, 175, 80, 0.4);
+  /* Touch-friendly size - Requirement 7.3 */
+  min-height: 44px;
+  min-width: 44px;
+}
+
+.game-over-overlay .primary-btn:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 24px rgba(76, 175, 80, 0.5);
+}
+
+.game-over-overlay .primary-btn:active {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 16px rgba(76, 175, 80, 0.4);
+}
+
+/* Pause overlay - Requirement 8.5 */
+.pause-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.75);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  z-index: 999;
+  animation: fadeIn 0.2s ease-in-out;
+}
+
+.pause-overlay h2 {
+  font-size: 2.5rem;
+  color: #FFD700;
+  margin: 0 0 15px 0;
+  text-shadow: 0 3px 6px rgba(0, 0, 0, 0.3);
+}
+
+.pause-overlay p {
+  font-size: 1.2rem;
+  color: white;
+  margin: 0;
+  text-align: center;
+  padding: 0 20px;
+}
+
+/* Mobile instructions - Requirements 7.1, 7.4 */
+.mobile-instructions {
+  width: 100%;
+  text-align: center;
+  padding: 12px 20px;
+  background: linear-gradient(135deg, rgba(102, 126, 234, 0.1) 0%, rgba(118, 75, 162, 0.1) 100%);
+  border: 2px dashed #667eea;
+  border-radius: 10px;
+  margin-top: 10px;
+}
+
+.mobile-instructions p {
+  margin: 0;
+  font-size: 1rem;
+  color: #667eea;
+  font-weight: 500;
+}
+
+/* Responsive design for mobile devices - Requirements 7.1, 7.3, 7.4 */
+@media (max-width: 768px) {
+  .snake-game {
+    max-width: 100%;
+    gap: 15px;
+  }
+
+  .game-header {
+    flex-direction: column;
+    gap: 10px;
+    text-align: center;
+    margin-bottom: 5px;
+  }
+
+  .game-header h1 {
+    font-size: 1.8rem;
+  }
+
+  .score-display {
+    font-size: 1.1rem;
+    padding: 8px 16px;
+  }
+
+  .score-display #score {
+    font-size: 1.3rem;
+    min-width: 35px;
+  }
+
+  .game-canvas {
+    border-width: 3px;
+    border-radius: 10px;
+  }
+
+  .game-controls {
+    gap: 12px;
+  }
+
+  .control-btn {
+    padding: 12px 20px;
+    font-size: 1rem;
+    max-width: 140px;
+  }
+
+  .game-over-overlay h2 {
+    font-size: 2.5rem;
+  }
+
+  .game-over-overlay .final-score {
+    font-size: 1.3rem;
+  }
+
+  .game-over-overlay .final-score #final-score {
+    font-size: 1.8rem;
+  }
+
+  .game-over-overlay .primary-btn {
+    padding: 14px 32px;
+    font-size: 1.1rem;
+  }
+
+  .pause-overlay h2 {
+    font-size: 2rem;
+  }
+
+  .pause-overlay p {
+    font-size: 1.1rem;
+  }
+
+  .mobile-instructions {
+    padding: 10px 16px;
+  }
+
+  .mobile-instructions p {
+    font-size: 0.95rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .snake-game {
+    gap: 12px;
+  }
+
+  .game-header h1 {
+    font-size: 1.6rem;
+  }
+
+  .score-display {
+    font-size: 1rem;
+    padding: 6px 14px;
+  }
+
+  .score-display #score {
+    font-size: 1.2rem;
+    min-width: 30px;
+  }
+
+  .game-canvas {
+    border-width: 2px;
+    border-radius: 8px;
+  }
+
+  .game-controls {
+    gap: 10px;
+    flex-direction: column;
+    max-width: 200px;
+    margin: 0 auto;
+  }
+
+  .control-btn {
+    max-width: 100%;
+    width: 100%;
+    padding: 12px 16px;
+    font-size: 1rem;
+  }
+
+  .game-over-overlay h2 {
+    font-size: 2rem;
+    margin-bottom: 15px;
+  }
+
+  .game-over-overlay .final-score {
+    font-size: 1.2rem;
+    margin-bottom: 25px;
+  }
+
+  .game-over-overlay .final-score #final-score {
+    font-size: 1.6rem;
+  }
+
+  .game-over-overlay .primary-btn {
+    padding: 12px 28px;
+    font-size: 1rem;
+  }
+
+  .pause-overlay h2 {
+    font-size: 1.8rem;
+  }
+
+  .pause-overlay p {
+    font-size: 1rem;
+  }
+
+  .mobile-instructions {
+    padding: 8px 12px;
+    margin-top: 5px;
+  }
+
+  .mobile-instructions p {
+    font-size: 0.9rem;
+  }
+}
+
+/* Landscape orientation adjustments for mobile - Requirement 7.4 */
+@media (max-width: 768px) and (orientation: landscape) {
+  .snake-game {
+    max-width: 90%;
+  }
+
+  .game-header {
+    flex-direction: row;
+    justify-content: space-between;
+  }
+
+  .game-header h1 {
+    font-size: 1.5rem;
+  }
+
+  .score-display {
+    font-size: 1rem;
+  }
+
+  .game-controls {
+    flex-direction: row;
+    max-width: 100%;
+  }
+
+  .control-btn {
+    max-width: 120px;
+  }
+
+  .game-over-overlay h2 {
+    font-size: 2rem;
+  }
+
+  .pause-overlay h2 {
+    font-size: 1.8rem;
+  }
+}
+
+/* High DPI display support - Requirement 8.3 */
+@media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
+  .game-canvas {
+    image-rendering: -webkit-optimize-contrast;
+    image-rendering: crisp-edges;
+  }
+}
+
+/* Ensure consistent theming with platform - Requirement 8.5 */
+.snake-game .control-btn,
+.snake-game .primary-btn {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+/* Accessibility improvements */
+.control-btn:focus,
+.primary-btn:focus {
+  outline: 3px solid rgba(102, 126, 234, 0.5);
+  outline-offset: 2px;
+}
+
+/* Prevent text selection during gameplay */
+.snake-game {
+  user-select: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+}
+
+/* Smooth transitions for overlays */
+.game-over-overlay,
+.pause-overlay {
+  transition: opacity 0.3s ease-in-out;
+}

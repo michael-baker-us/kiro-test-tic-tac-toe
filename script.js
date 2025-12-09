@@ -4,6 +4,7 @@ import { GameRegistry } from './src/gameRegistry.js';
 import { LandingPage } from './src/landingPage.js';
 import { ErrorHandler } from './src/errorHandler.js';
 import createTicTacToeGame from './src/games/tic-tac-toe/index.js';
+import createSnakeGame from './src/games/snake/index.js';
 
 // Page state management
 let currentPage = null;
@@ -31,6 +32,28 @@ try {
   });
 } catch (error) {
   console.error('Failed to register tic-tac-toe game:', error);
+  // This is a critical error during initialization
+  // Show error immediately if DOM is ready
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', () => {
+      showRegistrationError(error);
+    });
+  } else {
+    showRegistrationError(error);
+  }
+}
+
+// Register snake game with error handling
+try {
+  gameRegistry.registerGame({
+    id: 'snake',
+    name: 'Snake',
+    description: 'Classic arcade game - eat food and grow longer!',
+    route: '/snake',
+    loader: async () => createSnakeGame()
+  });
+} catch (error) {
+  console.error('Failed to register snake game:', error);
   // This is a critical error during initialization
   // Show error immediately if DOM is ready
   if (document.readyState === 'loading') {
@@ -136,6 +159,10 @@ router.registerRoute('/', () => {
 
 router.registerRoute('/tic-tac-toe', () => {
   showGamePage('/tic-tac-toe');
+});
+
+router.registerRoute('/snake', () => {
+  showGamePage('/snake');
 });
 
 /**
